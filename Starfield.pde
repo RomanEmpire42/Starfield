@@ -1,10 +1,10 @@
 int stars = 1000;
 int starSpeed = 5;
-int centerX, centerY;
+float centerX, centerY;
 Star[] galexy = new Star[stars];
 void setup()
 {
-  size((int)(0.95*window.innerWidth), (int)(0.95*window.innerHeight));
+  size(1000, 1000); //size((int)(0.95*window.innerWidth), (int)(0.95*window.innerHeight));
   centerX = width/2;
   centerY = height/2;
   for (int i = 0; i < stars; i++) {
@@ -18,16 +18,9 @@ void setup()
 void draw()
 {
   //move center
-  if (centerX > mouseX) {
-    centerX -= 1;
-  } else {
-    centerX += 1;
-  }
-  if (centerY > mouseY) {
-    centerY -= 1;
-  } else { 
-    centerY += 1;
-  }
+    double angleToCenter = Math.atan2((double)mouseY-centerY, (double)mouseX-centerX);
+    centerX += (Math.cos(angleToCenter));
+    centerY += (Math.sin(angleToCenter));
   //draw
   background(0, 0, 0);
   //test ellipse:
@@ -66,10 +59,10 @@ class Star
   int myColor = color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
   float beta = 0;
 
-  Star(int x_, int y_) //constructor
+  Star(float x_, float y_) //constructor
   {
-    myX = (float)x_;
-    myY = (float)y_;
+    myX = x_;
+    myY = y_;
     speed = starSpeed/10.0 * Math.random();
     direction = Math.random()*2*Math.PI;
   }
@@ -86,57 +79,38 @@ class Star
     ellipse(myX, myY, (float)(size*(beta/width)*speed/10), (float)(size*(beta/width)*speed/10));
   }
 }
+
+
+//---------------------------------
+//---------------------------------
+
+
 class Tardis extends Star {
   Tardis() {
     super(centerX, centerY);
     myX -= 5;
     myY -= 5;
     direction = 0.00;
-    speed = starSpeed;
+    speed = starSpeed/2;
   }
   void move() {
-    speed = starSpeed;
-    boolean loop = true;
-    int loops = 0;
-    while (loop == true) {
-      direction += 0.015;
-      if (direction >= 1) {
-        direction = 0.00;
-      }
-      if (dist(myX, myY, (float)centerX, (float)centerY) + 0.1 >= dist((float)(myX + (Math.cos(direction*2*Math.PI))*speed), (float)(myY + ((Math.cos(direction*2*Math.PI))*speed)), (float)centerX, (float)centerY)) {
-        loop = false;
-        myX += (Math.cos(direction*2*Math.PI))*(speed/2);
-        myY += (Math.sin(direction*2*Math.PI))*(speed/2);
-      } else {
-        if (myX > centerX) {
-          myX -= 0.1*speed;
-        } else {
-          myX += 0.1*speed;
-        }
-        if (myY > centerY) {
-          myY -= 0.1*speed;
-        } else { 
-          myY += 0.1*speed;
-        }
-      }
-      System.out.println(loops);
-      if (loops > 500) {
-        if (myX > centerX) {
-          myX -= 1;
-        } else {
-          myX += 1;
-        }
-        if (myY > centerY) {
-          myY -= 1;
-        } else { 
-          myY += 1;
-        }
-      }
-      if (loops > 1000) {
-        break;
-      }
-      loops++;
+    //strokeWeight(5);
+    //stroke(55);
+    //line(myX, myY, (float)(25*Math.cos(direction*2*Math.PI))*50, (float)(25*Math.sin(direction*2*Math.PI))*50);
+    
+    
+    speed = starSpeed/2;
+    double angleToCenter = Math.atan2((double)centerY-myY, (double)centerX-myX);
+    
+    if((angleToCenter+(direction*2*Math.PI))/2 > direction*2*Math.PI){
+      direction += 0.01;
+    } else{
+      direction -= 0.01;
     }
+    
+    myX += (Math.cos(direction*2*Math.PI))*(speed);
+    myY += (Math.sin(direction*2*Math.PI))*(speed);
+    System.out.println((Math.cos(direction*2*Math.PI))*(speed));
   }
   void show() {
       //Box Structure
@@ -181,8 +155,8 @@ class Tardis extends Star {
       //Police Note Thing
     rect(myX - 32, myY + 6, 20, 25);
     fill(0);
-    textSize(2);
-    text("POLICE TELEPHONE", myX - 29, myY + 12);
+    textSize(2);  
+    text("POLICE TELEPHONE", myX - 31.5, myY + 11);
     text("FREE", myX - 24, myY + 14);
     text("FOR USE OF", myX - 27, myY + 16);
     text("PUBLIC", myX - 25, myY + 18);
