@@ -23,8 +23,6 @@ void draw()
     centerY += (Math.sin(angleToCenter));
   //draw
   background(0, 0, 0);
-  //test ellipse:
-  //ellipse(centerX, centerY, 25, 25);
   fill(0, 0, 0);
   for (int i=0; i<galexy.length; i++) {
     if (Math.abs(galexy[i].myX-width/2)>width || Math.abs(galexy[i].myY-height/2)>height) {
@@ -69,6 +67,7 @@ class Star
   void move()
   {
     speed *= 1.05;
+    direction += 0.005*2*Math.PI;
     myX += ((float)Math.cos(direction))*speed;
     myY += ((float)Math.sin(direction))*speed;
   }
@@ -86,31 +85,33 @@ class Star
 
 
 class Tardis extends Star {
+  float dirX = 0;
+  float dirY = 0;
   Tardis() {
     super(centerX, centerY);
     myX -= 5;
     myY -= 5;
     direction = 0.00;
-    speed = starSpeed/2;
+    speed = starSpeed;
+    dirX = 1;
+    dirY = 0;
   }
   void move() {
-    //strokeWeight(5);
-    //stroke(55);
-    //line(myX, myY, (float)(25*Math.cos(direction*2*Math.PI))*50, (float)(25*Math.sin(direction*2*Math.PI))*50);
+    //test:
+    /*
+    ellipse(centerX, centerY, 25, 25);
+    strokeWeight(5);
+    stroke(55);
+    line(myX, myY, (float)(25*Math.cos(direction*2*Math.PI))*50, (float)(25*Math.sin(direction*2*Math.PI))*50);
+    */
     
-    
-    speed = starSpeed/2;
-    double angleToCenter = Math.atan2((double)centerY-myY, (double)centerX-myX);
-    
-    if((angleToCenter+(direction*2*Math.PI))/2 > direction*2*Math.PI){
-      direction += 0.01;
-    } else{
-      direction -= 0.01;
-    }
-    
-    myX += (Math.cos(direction*2*Math.PI))*(speed);
-    myY += (Math.sin(direction*2*Math.PI))*(speed);
-    System.out.println((Math.cos(direction*2*Math.PI))*(speed));
+    speed = starSpeed;
+    double centerDirection = Math.atan2((double)centerY-myY, (double)centerX-myX);
+    dirX += Math.cos(centerDirection)/50;
+    dirY += Math.sin(centerDirection)/50;
+    System.out.println((speed));
+    myX += dirX*(speed);
+    myY += dirY*(speed);
   }
   void show() {
       //Box Structure
