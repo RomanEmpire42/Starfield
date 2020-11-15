@@ -4,7 +4,7 @@ float centerX, centerY;
 Star[] galexy = new Star[stars];
 void setup()
 {
-  size((int)(0.65*window.innerWidth), (int)(0.85*window.innerHeight));
+  size((int)(0.85*window.innerWidth), (int)(0.85*window.innerHeight));
   centerX = width/2;
   centerY = height/2;
   for (int i = 0; i < stars; i++) {
