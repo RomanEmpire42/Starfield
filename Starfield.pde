@@ -4,7 +4,7 @@ float centerX, centerY;
 Star[] galexy = new Star[stars];
 void setup()
 {
-  size(1000, 1000); //size((int)(0.95*window.innerWidth), (int)(0.95*window.innerHeight));
+  size((int)(0.95*window.innerWidth), (int)(0.95*window.innerHeight));
   centerX = width/2;
   centerY = height/2;
   for (int i = 0; i < stars; i++) {
@@ -98,18 +98,19 @@ class Tardis extends Star {
   }
   void move() {
     //test:
-    /*
-    ellipse(centerX, centerY, 25, 25);
+    fill(255);
     strokeWeight(5);
     stroke(55);
-    line(myX, myY, (float)(25*Math.cos(direction*2*Math.PI))*50, (float)(25*Math.sin(direction*2*Math.PI))*50);
-    */
+    //ellipse(centerX, centerY, 25, 25);
+    //line(myX, myY, myX+dirX*500, myY+dirY*500);
+    strokeWeight(1);
+    stroke(0);
     
     speed = starSpeed;
+    int orbitDistance = 50;
     double centerDirection = Math.atan2((double)centerY-myY, (double)centerX-myX);
-    dirX += Math.cos(centerDirection)/50;
-    dirY += Math.sin(centerDirection)/50;
-    System.out.println((speed));
+    dirX += Math.cos(centerDirection)/orbitDistance;
+    dirY += Math.sin(centerDirection)/orbitDistance; 
     myX += dirX*(speed);
     myY += dirY*(speed);
   }
