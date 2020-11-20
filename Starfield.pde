@@ -101,8 +101,8 @@ class Tardis extends Star {
     fill(255);
     strokeWeight(5);
     stroke(55);
-    ellipse(centerX, centerY, 25, 25);
-    line(myX, myY, myX+dirX*500, myY+dirY*500);
+    //ellipse(centerX, centerY, 25, 25);
+    //line(myX, myY, myX+dirX*500, myY+dirY*500);
     strokeWeight(1);
     stroke(0);
     
